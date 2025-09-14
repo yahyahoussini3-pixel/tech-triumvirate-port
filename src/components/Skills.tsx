@@ -1,4 +1,4 @@
-import { Code, Bot, BarChart, Rocket, Star, CheckCircle } from 'lucide-react';
+import { Code, Bot, BarChart, Rocket, Star, CheckCircle, Palette, Box } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 const Skills = () => {
@@ -18,6 +18,38 @@ const Skills = () => {
         "Version Control (Git/GitHub)"
       ],
       badge: "Real-World Projects"
+    },
+    {
+      icon: <Palette className="h-12 w-12 text-ai-purple" />,
+      title: "Branding & Design Expert",
+      level: "Professional Experience",
+      skills: [
+        "Brand Strategy & Identity Development",
+        "Logo Design & Visual Identity",
+        "Brand Guidelines & Style Systems",
+        "Marketing Material Design",
+        "Digital Brand Assets Creation",
+        "Brand Positioning & Messaging",
+        "Client Brand Consultation",
+        "Multi-Brand Portfolio Management"
+      ],
+      badge: "Real Client Brands"
+    },
+    {
+      icon: <Box className="h-12 w-12 text-primary" />,
+      title: "3D Modeling & Animation",
+      level: "Expert Level",
+      skills: [
+        "3D Product Modeling & Visualization",
+        "Character Modeling & Rigging",
+        "Architectural 3D Rendering",
+        "Motion Graphics & Animation",
+        "Texture Design & UV Mapping",
+        "Lighting & Environment Setup",
+        "Render Optimization & Post-Processing",
+        "Interactive 3D Web Integration"
+      ],
+      badge: "Creative Specialist"
     },
     {
       icon: <Bot className="h-12 w-12 text-ai-purple" />,
@@ -81,6 +113,12 @@ const Skills = () => {
     { name: "PostgreSQL", category: "Database" },
     { name: "Stripe", category: "Payments" },
     { name: "Figma", category: "Design" },
+    { name: "Adobe Creative Suite", category: "Design" },
+    { name: "Blender", category: "3D" },
+    { name: "Three.js", category: "3D" },
+    { name: "Cinema 4D", category: "3D" },
+    { name: "After Effects", category: "Animation" },
+    { name: "Sketch", category: "Design" },
     { name: "Netlify", category: "Deployment" }
   ];
 
@@ -129,6 +167,10 @@ const Skills = () => {
     switch (badge) {
       case "Real-World Projects":
         return "client";
+      case "Real Client Brands":
+        return "ai";
+      case "Creative Specialist":
+        return "custom";
       case "Google Certified":
         return "success";
       case "Innovation Expert":
@@ -156,7 +198,7 @@ const Skills = () => {
         </div>
 
         {/* Main Skills Categories */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {skillCategories.map((category, index) => (
             <div 
               key={index} 
