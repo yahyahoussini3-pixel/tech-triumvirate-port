@@ -1,20 +1,23 @@
 import ProjectCard from './ProjectCard';
 import { ExternalLink, Github, FileText } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import hydroAiImage from '@/assets/hydro-ai-project.jpg';
 import commerceImage from '@/assets/commerce-analytics.jpg';
 import brandAiImage from '@/assets/brand-ai-project.jpg';
 
 const Projects = () => {
+  const { t } = useLanguage();
+
   const projects = [
     {
-      title: "HydroAI - Smart Hydroponic Innovation System",
-      description: "Award-winning hydroponic management platform powered by dedicated AI models. Complete IoT solution with real-time monitoring, automated control systems, and predictive growth analytics serving 50+ commercial hydroponic farms.",
+      title: t('project.hydro.title'),
+      description: t('project.hydro.description'),
       features: [
-        "AI-powered growth prediction",
-        "Real-time sensor monitoring", 
-        "Automated nutrient management",
-        "Mobile-responsive dashboard",
-        "Predictive maintenance alerts"
+        t('project.hydro.features').split(', ')[0],
+        t('project.hydro.features').split(', ')[1],
+        t('project.hydro.features').split(', ')[2],
+        t('project.hydro.features').split(', ')[3],
+        t('project.hydro.features').split(', ')[4]
       ],
       technologies: ["React", "Node.js", "Python", "TensorFlow", "IoT", "MongoDB", "WebSockets", "PWA"],
       impact: "50+ active commercial users, 40% increased crop yield, 30% reduction in resource waste, Winner of Innovation Competition",
@@ -160,10 +163,10 @@ const Projects = () => {
       <div className="container mx-auto">
         <div className="text-center mb-16 fade-in">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="gradient-text-hero">Real-World Applications & Innovations</span>
+            <span className="gradient-text-hero">{t('projects.title')}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Production applications serving real users, winning competitions, and powering actual businesses
+            {t('projects.subtitle')}
           </p>
         </div>
 

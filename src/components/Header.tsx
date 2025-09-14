@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Download } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +19,11 @@ const Header = () => {
   }, []);
 
   const navigation = [
-    { name: 'Home', href: '#home' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Contact', href: '#contact' },
+    { name: t('nav.home'), href: '#home' },
+    { name: t('nav.projects'), href: '#projects' },
+    { name: t('nav.about'), href: '#about' },
+    { name: t('nav.skills'), href: '#skills' },
+    { name: t('nav.contact'), href: '#contact' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -62,10 +65,11 @@ const Header = () => {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex">
+          <div className="hidden lg:flex items-center gap-4">
+            <LanguageSwitcher />
             <Button variant="outline" className="flex items-center gap-2">
               <Download className="w-4 h-4" />
-              Download CV
+              {t('nav.downloadCV')}
             </Button>
           </div>
 
@@ -95,10 +99,11 @@ const Header = () => {
                 {item.name}
               </button>
             ))}
-            <div className="px-3 py-2">
+            <div className="px-3 py-2 space-y-2">
+              <LanguageSwitcher />
               <Button variant="outline" className="flex items-center gap-2 w-full">
                 <Download className="w-4 h-4" />
-                Download CV
+                {t('nav.downloadCV')}
               </Button>
             </div>
           </div>

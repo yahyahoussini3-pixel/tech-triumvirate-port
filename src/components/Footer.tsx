@@ -1,6 +1,8 @@
 import { Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
   
   const socialLinks = [
@@ -41,7 +43,7 @@ const Footer = () => {
               DevPortfolio
             </h3>
             <p className="text-sm text-muted-foreground">
-              © {currentYear} Portfolio. All rights reserved.
+              {t('footer.copyright')}
             </p>
           </div>
 

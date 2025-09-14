@@ -1,13 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ExternalLink } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import heroImage from '@/assets/hero-image.jpg';
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   const achievements = [
-    { icon: '🏆', text: 'Competition Winner', type: 'gold' },
-    { icon: '📊', text: 'Google BI/DA Certified', type: 'primary' },
-    { icon: '👥', text: '50+ Active Users', type: 'success' },
-    { icon: '🤖', text: 'AI Innovation Expert', type: 'ai' },
+    { icon: '🏆', text: t('hero.badge.winner'), type: 'gold' },
+    { icon: '📊', text: t('hero.badge.certified'), type: 'primary' },
+    { icon: '👥', text: t('hero.badge.users'), type: 'success' },
+    { icon: '🤖', text: t('hero.badge.expert'), type: 'ai' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -25,13 +28,11 @@ const Hero = () => {
           <div className="text-center lg:text-left space-y-8 fade-in">
             <div className="space-y-6">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="gradient-text-hero">Full Stack Developer</span>
-                <br />
-                <span className="gradient-text-ai">& AI Engineer</span>
+                <span className="gradient-text-hero">{t('hero.title')}</span>
               </h1>
               
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Competition-winning startup founder building AI-powered solutions that serve real users
+                {t('hero.subtitle')}
               </p>
             </div>
 
@@ -56,7 +57,7 @@ const Hero = () => {
                 className="group"
                 onClick={() => scrollToSection('#projects')}
               >
-                View My Work
+                {t('hero.cta.work')}
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
               
@@ -65,7 +66,7 @@ const Hero = () => {
                 size="lg"
                 onClick={() => scrollToSection('#contact')}
               >
-                Get In Touch
+                {t('hero.cta.contact')}
                 <ExternalLink className="w-4 h-4 ml-2" />
               </Button>
             </div>

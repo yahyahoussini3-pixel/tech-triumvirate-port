@@ -1,12 +1,15 @@
 import { Code, Bot, BarChart, Rocket, Star, CheckCircle, Palette, Box } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Skills = () => {
+  const { t } = useLanguage();
+
   const skillCategories = [
     {
       icon: <Code className="h-12 w-12 text-primary" />,
-      title: "Full-Stack Development",
-      level: "Expert Level",
+      title: t('skills.fullstack.title'),
+      level: t('skills.fullstack.level'),
       skills: [
         "React.js & Vue.js (Advanced)",
         "Node.js & Express.js (Expert)",
@@ -17,12 +20,12 @@ const Skills = () => {
         "Database Design (MongoDB, PostgreSQL)",
         "Version Control (Git/GitHub)"
       ],
-      badge: "Real-World Projects"
+      badge: t('skills.fullstack.badge')
     },
     {
       icon: <Palette className="h-12 w-12 text-ai-purple" />,
-      title: "Branding & Design Expert",
-      level: "Professional Experience",
+      title: t('skills.branding.title'),
+      level: t('skills.branding.level'),
       skills: [
         "Brand Strategy & Identity Development",
         "Logo Design & Visual Identity",
@@ -33,12 +36,12 @@ const Skills = () => {
         "Client Brand Consultation",
         "Multi-Brand Portfolio Management"
       ],
-      badge: "Real Client Brands"
+      badge: t('skills.branding.badge')
     },
     {
       icon: <Box className="h-12 w-12 text-primary" />,
-      title: "3D Modeling & Animation",
-      level: "Expert Level",
+      title: t('skills.3d.title'),
+      level: t('skills.3d.level'),
       skills: [
         "3D Product Modeling & Visualization",
         "Character Modeling & Rigging",
@@ -191,9 +194,9 @@ const Skills = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-foreground">Skills & Expertise</h2>
+          <h2 className="text-4xl font-bold mb-4 text-foreground">{t('skills.title')}</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Technical proficiency meets business acumen and real-world experience
+            {t('skills.subtitle')}
           </p>
         </div>
 
@@ -229,7 +232,7 @@ const Skills = () => {
 
         {/* Technical Tools & Platforms */}
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold mb-6 text-center text-foreground">Technical Tools & Platforms</h3>
+          <h3 className="text-2xl font-semibold mb-6 text-center text-foreground">{t('skills.tools.title')}</h3>
           <div className="bg-muted/50 p-6 rounded-xl">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {techTools.map((tool, index) => (
@@ -247,7 +250,7 @@ const Skills = () => {
 
         {/* Languages & Communication */}
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold mb-6 text-center text-foreground">Languages & Communication</h3>
+          <h3 className="text-2xl font-semibold mb-6 text-center text-foreground">{t('skills.languages.title')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {languages.map((language, index) => (
               <div key={index} className="bg-card p-6 rounded-xl border text-center">
@@ -260,7 +263,7 @@ const Skills = () => {
 
         {/* Certifications & Achievements */}
         <div>
-          <h3 className="text-2xl font-semibold mb-8 text-center text-foreground">Certifications & Achievements</h3>
+          <h3 className="text-2xl font-semibold mb-8 text-center text-foreground">{t('skills.certs.title')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {certifications.map((cert, index) => (
               <div key={index} className="bg-card p-8 rounded-xl shadow-sm border hover:shadow-md transition-shadow duration-300">
