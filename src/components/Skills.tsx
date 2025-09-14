@@ -58,12 +58,12 @@ const Skills = () => {
       skills: [
         "Startup Founding & Management",
         "Brand Strategy & Development",
+        "Visual Identity & Logo Design",
+        "Brand Positioning & Messaging",
         "E-commerce Platform Development",
         "Digital Marketing & SEO",
         "Project Management (Agile)",
-        "Client Relationship Management",
-        "Competition Strategy",
-        "Market Research & Analysis"
+        "Client Relationship Management"
       ],
       badge: "Competition Winner"
     }
