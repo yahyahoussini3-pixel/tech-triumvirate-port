@@ -78,10 +78,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signIn = async (email: string, password: string) => {
     const redirectUrl = `${window.location.origin}/dashboard`;
     
+    // Try to sign in first
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    
+    // If login fails and this is the admin email, try to create the account
+    if (error && email === 'yahyahoussini366@gmail.com') {
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl
+        }
+      });
+      
+      if (signUpError) {
+        return { error: signUpError };
+      }
+      
+      // After successful signup, try to sign in again
+      const { error: secondLoginError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      return { error: secondLoginError };
+    }
     
     return { error };
   };

@@ -31,7 +31,11 @@ const AdminLogin = () => {
     const { error } = await signIn(email, password);
     
     if (error) {
-      setError(error.message);
+      if (error.message.includes('Invalid login credentials') && email === 'yahyahoussini366@gmail.com') {
+        setError('Creating admin account... Please try again in a moment.');
+      } else {
+        setError(error.message);
+      }
     }
     
     setLoading(false);
