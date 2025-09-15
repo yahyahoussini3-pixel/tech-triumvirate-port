@@ -236,6 +236,147 @@ export type Database = {
         }
         Relationships: []
       }
+      crawl_errors: {
+        Row: {
+          discovered_at: string
+          error_message: string | null
+          error_type: string
+          id: string
+          resolved: boolean | null
+          status_code: number | null
+          url: string
+        }
+        Insert: {
+          discovered_at?: string
+          error_message?: string | null
+          error_type: string
+          id?: string
+          resolved?: boolean | null
+          status_code?: number | null
+          url: string
+        }
+        Update: {
+          discovered_at?: string
+          error_message?: string | null
+          error_type?: string
+          id?: string
+          resolved?: boolean | null
+          status_code?: number | null
+          url?: string
+        }
+        Relationships: []
+      }
+      keywords: {
+        Row: {
+          created_at: string
+          current_position: number | null
+          difficulty: number | null
+          id: string
+          keyword: string
+          last_checked: string | null
+          previous_position: number | null
+          search_volume: number | null
+          target_url: string
+          trend: string | null
+        }
+        Insert: {
+          created_at?: string
+          current_position?: number | null
+          difficulty?: number | null
+          id?: string
+          keyword: string
+          last_checked?: string | null
+          previous_position?: number | null
+          search_volume?: number | null
+          target_url: string
+          trend?: string | null
+        }
+        Update: {
+          created_at?: string
+          current_position?: number | null
+          difficulty?: number | null
+          id?: string
+          keyword?: string
+          last_checked?: string | null
+          previous_position?: number | null
+          search_volume?: number | null
+          target_url?: string
+          trend?: string | null
+        }
+        Relationships: []
+      }
+      seo_audits: {
+        Row: {
+          audit_data: Json
+          content_score: number | null
+          created_at: string
+          id: string
+          issues: Json | null
+          overall_score: number | null
+          page_url: string
+          performance_score: number | null
+          recommendations: Json | null
+          technical_score: number | null
+        }
+        Insert: {
+          audit_data?: Json
+          content_score?: number | null
+          created_at?: string
+          id?: string
+          issues?: Json | null
+          overall_score?: number | null
+          page_url: string
+          performance_score?: number | null
+          recommendations?: Json | null
+          technical_score?: number | null
+        }
+        Update: {
+          audit_data?: Json
+          content_score?: number | null
+          created_at?: string
+          id?: string
+          issues?: Json | null
+          overall_score?: number | null
+          page_url?: string
+          performance_score?: number | null
+          recommendations?: Json | null
+          technical_score?: number | null
+        }
+        Relationships: []
+      }
+      seo_settings: {
+        Row: {
+          created_at: string
+          domain: string
+          ga4_property: string | null
+          gsc_property: string | null
+          id: string
+          robots_txt: string | null
+          sitemap_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          domain: string
+          ga4_property?: string | null
+          gsc_property?: string | null
+          id?: string
+          robots_txt?: string | null
+          sitemap_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          domain?: string
+          ga4_property?: string | null
+          gsc_property?: string | null
+          id?: string
+          robots_txt?: string | null
+          sitemap_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

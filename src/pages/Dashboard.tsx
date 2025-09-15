@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useAnalyticsSummary, useAnalyticsVisitors, useContactSubmissions } from '@/hooks/useAnalytics';
+import { useSEOSettings } from '@/hooks/useSEO';
+import SEODashboard from '@/components/seo/SEODashboard';
+import SEOSetup from '@/components/seo/SEOSetup';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -49,6 +52,7 @@ const Dashboard = () => {
   const { summary, loading: summaryLoading } = useAnalyticsSummary(dateRange);
   const { visitors, loading: visitorsLoading } = useAnalyticsVisitors(50);
   const { submissions, loading: submissionsLoading } = useContactSubmissions(20);
+  const { settings: seoSettings } = useSEOSettings();
   const { signOut } = useAuth();
 
   const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#00ff00'];
@@ -357,12 +361,13 @@ const Dashboard = () => {
 
         {/* Detailed Analytics Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="traffic">Traffic</TabsTrigger>
             <TabsTrigger value="visitors">Visitors</TabsTrigger>
             <TabsTrigger value="leads">Leads</TabsTrigger>
             <TabsTrigger value="performance">Performance</TabsTrigger>
+            <TabsTrigger value="seo">SEO</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -658,6 +663,16 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* SEO Tab */}
+          <TabsContent value="seo" className="space-y-6">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-2">SEO Management</h2>
+              <p className="text-muted-foreground">Monitor and optimize your site's search performance</p>
+            </div>
+            
+            {seoSettings?.domain ? <SEODashboard /> : <SEOSetup />}
           </TabsContent>
         </Tabs>
       </div>
