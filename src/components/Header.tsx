@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Download } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -19,11 +20,12 @@ const Header = () => {
   }, []);
 
   const navigation = [
-    { name: t('nav.home'), href: '#home' },
-    { name: t('nav.projects'), href: '#projects' },
-    { name: t('nav.about'), href: '#about' },
-    { name: t('nav.skills'), href: '#skills' },
-    { name: t('nav.contact'), href: '#contact' },
+    { name: t('nav.home'), href: '#home', isLink: false },
+    { name: t('nav.projects'), href: '#projects', isLink: false },
+    { name: t('nav.blog'), href: '/blog', isLink: true },
+    { name: t('nav.about'), href: '#about', isLink: false },
+    { name: t('nav.skills'), href: '#skills', isLink: false },
+    { name: t('nav.contact'), href: '#contact', isLink: false },
   ];
 
   const scrollToSection = (href: string) => {
@@ -32,6 +34,14 @@ const Header = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMenuOpen(false);
+  };
+
+  const handleNavigation = (item: any) => {
+    if (item.isLink) {
+      setIsMenuOpen(false);
+    } else {
+      scrollToSection(item.href);
+    }
   };
 
   return (
@@ -53,15 +63,25 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-              >
-                {item.name}
-              </button>
-            ))}
+            {navigation.map((item) => 
+              item.isLink ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
+                >
+                  {item.name}
+                </button>
+              )
+            )}
           </nav>
 
           {/* Desktop CTA */}
@@ -90,15 +110,26 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-md border-b border-border/50">
-            {navigation.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary transition-colors duration-200 w-full text-left"
-              >
-                {item.name}
-              </button>
-            ))}
+            {navigation.map((item) => 
+              item.isLink ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary transition-colors duration-200 w-full text-left"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary transition-colors duration-200 w-full text-left"
+                >
+                  {item.name}
+                </button>
+              )
+            )}
             <div className="px-3 py-2 space-y-2">
               <LanguageSwitcher />
               <Button variant="outline" className="flex items-center gap-2 w-full">

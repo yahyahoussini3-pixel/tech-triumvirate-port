@@ -27,10 +27,27 @@ const translations = {
     // Navigation
     'nav.home': 'Home',
     'nav.projects': 'Projects',
+    'nav.blog': 'Blog',
     'nav.about': 'About', 
     'nav.skills': 'Skills',
     'nav.contact': 'Contact',
     'nav.downloadCV': 'Download CV',
+
+    // Blog Section
+    'blog.title': 'Insights & Expertise',
+    'blog.subtitle': 'Technical insights, business intelligence, and real-world development experiences',
+    'blog.searchPlaceholder': 'Search articles...',
+    'blog.search': 'Search',
+    'blog.categories': 'Categories',
+    'blog.allCategories': 'All Categories',
+    'blog.noPosts': 'No posts found matching your criteria.',
+    'blog.readMore': 'Read More',
+    'blog.minRead': 'min read',
+    'blog.by': 'by',
+    'blog.share': 'Share',
+    'blog.postNotFound': 'Post Not Found',
+    'blog.backToBlog': 'Back to Blog',
+    'blog.relatedPosts': 'Related Posts',
 
     // Hero Section
     'hero.title': 'Full Stack Developer & AI Engineer',
@@ -134,10 +151,27 @@ const translations = {
     // Navigation
     'nav.home': 'Accueil',
     'nav.projects': 'Projets',
+    'nav.blog': 'Blog',
     'nav.about': 'À Propos',
     'nav.skills': 'Compétences', 
     'nav.contact': 'Contact',
     'nav.downloadCV': 'Télécharger CV',
+
+    // Blog Section  
+    'blog.title': 'Insights & Expertise',
+    'blog.subtitle': 'Insights techniques, intelligence d\'affaires, et expériences de développement du monde réel',
+    'blog.searchPlaceholder': 'Rechercher des articles...',
+    'blog.search': 'Rechercher',
+    'blog.categories': 'Catégories',
+    'blog.allCategories': 'Toutes les Catégories',
+    'blog.noPosts': 'Aucun article trouvé correspondant à vos critères.',
+    'blog.readMore': 'Lire Plus',
+    'blog.minRead': 'min de lecture',
+    'blog.by': 'par',
+    'blog.share': 'Partager',
+    'blog.postNotFound': 'Article Non Trouvé',
+    'blog.backToBlog': 'Retour au Blog',
+    'blog.relatedPosts': 'Articles Connexes',
 
     // Hero Section
     'hero.title': 'Développeur Full Stack & Ingénieur IA',
