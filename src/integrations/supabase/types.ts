@@ -14,7 +14,201 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analytics_events: {
+        Row: {
+          event_data: Json | null
+          event_type: string
+          id: string
+          page_url: string | null
+          session_id: string
+          timestamp: string
+        }
+        Insert: {
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          page_url?: string | null
+          session_id: string
+          timestamp?: string
+        }
+        Update: {
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          page_url?: string | null
+          session_id?: string
+          timestamp?: string
+        }
+        Relationships: []
+      }
+      analytics_visitors: {
+        Row: {
+          browser: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          exit_page: string | null
+          id: string
+          ip_address: string | null
+          landing_page: string | null
+          page_views: number | null
+          referrer: string | null
+          session_duration: number | null
+          session_id: string
+          user_agent: string | null
+        }
+        Insert: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          exit_page?: string | null
+          id?: string
+          ip_address?: string | null
+          landing_page?: string | null
+          page_views?: number | null
+          referrer?: string | null
+          session_duration?: number | null
+          session_id: string
+          user_agent?: string | null
+        }
+        Update: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          exit_page?: string | null
+          id?: string
+          ip_address?: string | null
+          landing_page?: string | null
+          page_views?: number | null
+          referrer?: string | null
+          session_duration?: number | null
+          session_id?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      blog_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          language: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          language?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          language?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          author: string
+          category: string
+          content: string
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          language: string
+          meta_description: string | null
+          meta_title: string | null
+          published: boolean
+          reading_time: number | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string
+          category: string
+          content: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          language?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          reading_time?: number | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: string
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          language?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          reading_time?: number | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          lead_score: number | null
+          message: string
+          name: string
+          source: string | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          lead_score?: number | null
+          message: string
+          name: string
+          source?: string | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          lead_score?: number | null
+          message?: string
+          name?: string
+          source?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
