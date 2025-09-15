@@ -3,6 +3,7 @@ import { useAnalyticsSummary, useAnalyticsVisitors, useContactSubmissions } from
 import { useSEOSettings } from '@/hooks/useSEO';
 import SEODashboard from '@/components/seo/SEODashboard';
 import SEOSetup from '@/components/seo/SEOSetup';
+import BlogManagement from '@/components/blog/BlogManagement';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -361,13 +362,14 @@ const Dashboard = () => {
 
         {/* Detailed Analytics Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="traffic">Traffic</TabsTrigger>
             <TabsTrigger value="visitors">Visitors</TabsTrigger>
             <TabsTrigger value="leads">Leads</TabsTrigger>
             <TabsTrigger value="performance">Performance</TabsTrigger>
             <TabsTrigger value="seo">SEO</TabsTrigger>
+            <TabsTrigger value="blog">Blog</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -673,6 +675,11 @@ const Dashboard = () => {
             </div>
             
             {seoSettings?.domain ? <SEODashboard /> : <SEOSetup />}
+          </TabsContent>
+
+          {/* Blog Management Tab */}
+          <TabsContent value="blog" className="space-y-6">
+            <BlogManagement />
           </TabsContent>
         </Tabs>
       </div>
