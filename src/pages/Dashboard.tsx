@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAnalyticsSummary, useAnalyticsVisitors, useContactSubmissions } from '@/hooks/useAnalytics';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -35,7 +36,8 @@ import {
   Monitor,
   Calendar,
   Filter,
-  RefreshCw
+  RefreshCw,
+  LogOut
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -47,33 +49,83 @@ const Dashboard = () => {
   const { summary, loading: summaryLoading } = useAnalyticsSummary(dateRange);
   const { visitors, loading: visitorsLoading } = useAnalyticsVisitors(50);
   const { submissions, loading: submissionsLoading } = useContactSubmissions(20);
+  const { signOut } = useAuth();
 
   const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#00ff00'];
 
-  // Sample data for charts (in real implementation, this would come from analytics)
-  const trafficData = [
-    { name: 'Mon', visitors: 24, pageViews: 45 },
-    { name: 'Tue', visitors: 32, pageViews: 67 },
-    { name: 'Wed', visitors: 18, pageViews: 38 },
-    { name: 'Thu', visitors: 41, pageViews: 89 },
-    { name: 'Fri', visitors: 35, pageViews: 72 },
-    { name: 'Sat', visitors: 28, pageViews: 55 },
-    { name: 'Sun', visitors: 22, pageViews: 43 }
-  ];
+  // Generate real traffic data based on actual visitor data
+  const generateTrafficData = () => {
+    if (!visitors.length) return [];
+    
+    const last7Days = Array.from({ length: 7 }, (_, i) => {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      return date.toISOString().split('T')[0];
+    }).reverse();
 
-  const deviceData = [
-    { name: 'Desktop', value: 45, color: '#8884d8' },
-    { name: 'Mobile', value: 35, color: '#82ca9d' },
-    { name: 'Tablet', value: 20, color: '#ffc658' }
-  ];
+    return last7Days.map((date, index) => {
+      const dayVisitors = visitors.filter(v => 
+        v.created_at.startsWith(date)
+      );
+      const dayName = new Date(date).toLocaleDateString('en', { weekday: 'short' });
+      
+      return {
+        name: dayName,
+        visitors: dayVisitors.length,
+        pageViews: dayVisitors.reduce((sum, v) => sum + v.page_views, 0)
+      };
+    });
+  };
 
-  const sourceData = [
-    { name: 'Direct', value: 40, color: '#8884d8' },
-    { name: 'Google', value: 30, color: '#82ca9d' },
-    { name: 'LinkedIn', value: 15, color: '#ffc658' },
-    { name: 'GitHub', value: 10, color: '#ff7300' },
-    { name: 'Other', value: 5, color: '#00ff00' }
-  ];
+  // Generate device data from real visitor data
+  const generateDeviceData = () => {
+    if (!visitors.length) return [];
+    
+    const deviceCounts = visitors.reduce((acc: Record<string, number>, visitor) => {
+      const device = visitor.device_type || 'Unknown';
+      acc[device] = (acc[device] || 0) + 1;
+      return acc;
+    }, {});
+
+    const total = visitors.length;
+    const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#00ff00'];
+    
+    return Object.entries(deviceCounts).map(([name, count], index) => ({
+      name,
+      value: Math.round((count / total) * 100),
+      color: colors[index % colors.length]
+    }));
+  };
+
+  // Generate referrer data from real visitor data
+  const generateSourceData = () => {
+    if (!visitors.length) return [];
+    
+    const sourceCounts = visitors.reduce((acc: Record<string, number>, visitor) => {
+      let source = 'Direct';
+      if (visitor.referrer) {
+        if (visitor.referrer.includes('google')) source = 'Google';
+        else if (visitor.referrer.includes('linkedin')) source = 'LinkedIn';
+        else if (visitor.referrer.includes('github')) source = 'GitHub';
+        else source = 'Other';
+      }
+      acc[source] = (acc[source] || 0) + 1;
+      return acc;
+    }, {});
+
+    const total = visitors.length;
+    const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#00ff00'];
+    
+    return Object.entries(sourceCounts).map(([name, count], index) => ({
+      name,
+      value: Math.round((count / total) * 100),
+      color: colors[index % colors.length]
+    }));
+  };
+
+  const trafficData = generateTrafficData();
+  const deviceData = generateDeviceData();
+  const sourceData = generateSourceData();
 
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -102,6 +154,10 @@ const Dashboard = () => {
             <Button variant="outline" size="sm">
               <RefreshCw className="h-4 w-4 mr-2" />
               Refresh
+            </Button>
+            <Button variant="outline" size="sm" onClick={signOut}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Sign Out
             </Button>
           </div>
         </div>
@@ -156,7 +212,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {summary?.conversionRate.toFixed(1) || 0}%
+                {summary?.conversionRate?.toFixed(1) || 0}%
               </div>
               <p className="text-xs text-muted-foreground">
                 +3.2% from last month
