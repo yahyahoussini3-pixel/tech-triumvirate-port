@@ -49,6 +49,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ post, onSave, onCancel }) => {
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [recommendations, setRecommendations] = useState<string[]>([]);
 
   useEffect(() => {
     if (formData.content) {
@@ -72,6 +73,9 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ post, onSave, onCancel }) => {
       if (error) throw error;
       if (data?.scores) {
         setAiScore(data.scores);
+      }
+      if (data?.recommendations) {
+        setRecommendations(data.recommendations);
       }
     } catch (error) {
       console.error('AI analysis failed:', error);
@@ -402,18 +406,21 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ post, onSave, onCancel }) => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5" />
-                  <span>Add more conversational keywords for AI search</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5" />
-                  <span>Include Q&A format sections for better AI citations</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5" />
-                  <span>Optimize for voice search with natural language</span>
-                </div>
+                {isAnalyzing ? (
+                  <div className="text-center py-4">
+                    <div className="animate-spin h-6 w-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground">Getting AI recommendations...</p>
+                  </div>
+                ) : (
+                  <>
+                    {recommendations.map((recommendation, index) => (
+                      <div key={index} className="flex items-start gap-2">
+                        <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span>{recommendation}</span>
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>

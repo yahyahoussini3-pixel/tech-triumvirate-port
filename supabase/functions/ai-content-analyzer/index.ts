@@ -142,6 +142,8 @@ async function analyzeContent(
 
 async function getGEORecommendations(title: string, content: string, apiKey: string): Promise<string[]> {
   try {
+    console.log('Making Perplexity API request for GEO recommendations...');
+    
     const response = await fetch('https://api.perplexity.ai/chat/completions', {
       method: 'POST',
       headers: {
@@ -153,21 +155,16 @@ async function getGEORecommendations(title: string, content: string, apiKey: str
         messages: [
           {
             role: 'system',
-            content: 'You are an expert in Generative Engine Optimization (GEO). Analyze content and provide specific recommendations for optimizing visibility in AI search results like ChatGPT, Perplexity, Claude, and Google SGE. Be concise and actionable.'
+            content: 'You are an expert in Generative Engine Optimization (GEO). Analyze content and provide 3-5 specific, actionable recommendations to improve visibility in AI search results. Format as numbered list.'
           },
           {
             role: 'user',
-            content: `Analyze this blog post for GEO optimization:
-
-Title: ${title}
-Content: ${content.substring(0, 1000)}...
-
-Provide 3-5 specific recommendations to improve visibility in AI search results.`
+            content: `Title: ${title}\n\nContent: ${content.substring(0, 1000)}\n\nProvide GEO optimization recommendations:`
           }
         ],
-        temperature: 0.3,
+        temperature: 0.2,
         top_p: 0.9,
-        max_tokens: 500,
+        max_tokens: 300,
         return_images: false,
         return_related_questions: false,
         frequency_penalty: 1,
@@ -175,21 +172,29 @@ Provide 3-5 specific recommendations to improve visibility in AI search results.
       }),
     });
 
+    console.log('Perplexity API response status:', response.status);
+    
     if (!response.ok) {
-      console.error('Perplexity API error:', response.status, response.statusText);
+      const errorText = await response.text();
+      console.error('Perplexity API error:', response.status, response.statusText, errorText);
       return getDefaultRecommendations();
     }
 
     const data = await response.json();
+    console.log('Perplexity API response data:', JSON.stringify(data, null, 2));
+    
     const recommendations = data.choices?.[0]?.message?.content;
     
     if (recommendations) {
       // Parse recommendations from AI response
-      return recommendations
+      const parsed = recommendations
         .split('\n')
         .filter((line: string) => line.trim().length > 0 && (line.includes('-') || line.includes('•') || line.match(/^\d+\./)))
         .map((line: string) => line.replace(/^[-•\d.]\s*/, '').trim())
         .slice(0, 5);
+      
+      console.log('Parsed recommendations:', parsed);
+      return parsed.length > 0 ? parsed : getDefaultRecommendations();
     }
 
     return getDefaultRecommendations();
