@@ -23,6 +23,7 @@ const Header = () => {
     { name: t('nav.home'), href: '#home', isLink: false },
     { name: t('nav.projects'), href: '#projects', isLink: false },
     { name: t('nav.blog'), href: '/blog', isLink: true },
+    { name: 'My Story', href: '/my-story', isLink: true },
     { name: t('nav.about'), href: '#about', isLink: false },
     { name: t('nav.skills'), href: '#skills', isLink: false },
     { name: t('nav.contact'), href: '#contact', isLink: false },
