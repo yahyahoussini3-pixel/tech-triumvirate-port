@@ -11,6 +11,7 @@ import BlogPost from "./pages/BlogPost";
 import Dashboard from "./pages/Dashboard";
 import AdminLogin from "./pages/AdminLogin";
 import MyStory from "./pages/MyStory";
+import CreativeBranding from "./pages/CreativeBranding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/my-story" element={<MyStory />} />
+            <Route path="/creative-branding" element={<CreativeBranding />} />
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/dashboard" element={
               <ProtectedRoute>

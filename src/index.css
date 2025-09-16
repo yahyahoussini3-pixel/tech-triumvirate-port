@@ -82,26 +82,26 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 340 43% 1%;
+    --background: 220 15% 9%;
     --foreground: 0 0% 100%;
 
-    --card: 340 20% 5%;
+    --card: 220 15% 10%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 340 43% 1%;
+    --popover: 220 15% 9%;
     --popover-foreground: 0 0% 100%;
 
     --primary: 0 0% 100%;
-    --primary-foreground: 340 43% 1%;
+    --primary-foreground: 220 15% 9%;
 
-    --secondary: 340 20% 15%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 340 20% 15%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 340 20% 15%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 220 15% 9%;
 
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
@@ -110,22 +110,29 @@ All colors MUST be HSL.
     --ai-purple-foreground: 0 0% 100%;
 
     --gold: 45 93% 47%;
-    --gold-foreground: 340 43% 1%;
+    --gold-foreground: 220 15% 9%;
 
-    --navy: 340 43% 1%;
+    --navy: 220 15% 9%;
     --navy-foreground: 0 0% 100%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 340 20% 15%;
-    --input: 340 20% 15%;
+    --border: 220 15% 15%;
+    --input: 220 15% 15%;
     --ring: 0 0% 100%;
+
+    /* Cosmic colors */
+    --cosmic-bg: 220 15% 9%;
+    --cosmic-secondary: 220 15% 10%;
+    --cosmic-accent: 0 0% 100%;
+    --cosmic-muted: 0 0% 65%;
 
     /* Dark mode shadows */
     --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.5);
     --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.6);
     --shadow-hero: 0 10px 40px rgba(0, 0, 0, 0.4);
+    --shadow-cosmic: 0 0 40px rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -248,5 +255,65 @@ All colors MUST be HSL.
 
   .animate-pulse-gentle {
     animation: pulse 3s ease-in-out infinite;
+  }
+
+  /* Cosmic effects */
+  .particle {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .particle:nth-child(odd) {
+    animation-delay: -2s;
+  }
+
+  .particle:nth-child(even) {
+    animation-delay: -4s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-20px) translateX(10px);
+      opacity: 1;
+    }
+  }
+
+  .cosmic-gradient {
+    background: radial-gradient(circle at 50% 50%, hsl(220 15% 15%) 0%, hsl(220 15% 9%) 100%);
+  }
+
+  .text-shimmer {
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, white, rgba(255, 255, 255, 0.5));
+    transform-origin: left;
+    z-index: 1000;
   }
 }
