@@ -9,6 +9,7 @@ const MyStory = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
   const [visibleWords, setVisibleWords] = useState<Record<string, number>>({});
+  const [scrollProgress, setScrollProgress] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -82,6 +83,12 @@ const MyStory = () => {
 
     const handleScroll = () => {
       if (!containerRef.current) return;
+      
+      // Calculate scroll progress
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrollTop / docHeight;
+      setScrollProgress(scrollPercent);
       
       const sections = containerRef.current.querySelectorAll('[data-section]');
       sections.forEach((section) => {
@@ -201,6 +208,27 @@ const MyStory = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-muted/5 rounded-full blur-3xl animate-pulse-gentle" style={{ animationDelay: '4s' }} />
       </div>
 
+      {/* Scroll Progress Timeline */}
+      <div className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block">
+        <div className="relative h-80 w-1 bg-muted/20 rounded-full">
+          <div 
+            className="absolute top-0 left-0 w-full bg-gradient-to-b from-primary to-accent rounded-full transition-all duration-300 ease-out"
+            style={{ height: `${scrollProgress * 100}%` }}
+          />
+          <div 
+            className="absolute w-4 h-4 bg-primary rounded-full -left-1.5 transition-all duration-300 ease-out"
+            style={{ 
+              top: `${scrollProgress * 100}%`,
+              transform: 'translateY(-50%)',
+              boxShadow: '0 0 20px hsl(var(--primary) / 0.5)'
+            }}
+          />
+        </div>
+        <div className="mt-4 text-sm text-muted-foreground text-center">
+          {Math.round(scrollProgress * 100)}%
+        </div>
+      </div>
+
       {/* Navigation */}
       <nav className="fixed top-6 left-6 z-50">
         <Link to="/">
@@ -266,7 +294,7 @@ const MyStory = () => {
           <section 
             key={section.id}
             data-section={section.id}
-            className="min-h-screen flex flex-col justify-center px-6 py-20"
+            className="min-h-screen flex flex-col justify-center px-6 py-32"
           >
             <div className="max-w-4xl mx-auto">
               <h2 
@@ -280,14 +308,18 @@ const MyStory = () => {
               
               <div className="space-y-8">
                 {section.id === 'timeline' ? (
-                  section.content.map((item, index) => (
-                    <TimelineItem 
-                      key={index}
-                      text={item} 
-                      index={index}
-                      sectionId={section.id}
-                    />
-                  ))
+                  <div className="relative">
+                    {/* Timeline line for timeline section */}
+                    <div className="absolute left-[120px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/60 to-primary/20" />
+                    {section.content.map((item, index) => (
+                      <TimelineItem 
+                        key={index}
+                        text={item} 
+                        index={index}
+                        sectionId={section.id}
+                      />
+                    ))}
+                  </div>
                 ) : (
                   section.content.map((paragraph, index) => (
                     <div key={index} className="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed">
