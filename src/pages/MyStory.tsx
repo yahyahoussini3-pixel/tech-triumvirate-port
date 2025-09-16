@@ -11,6 +11,7 @@ const MyStory = () => {
   const [visibleWords, setVisibleWords] = useState<Record<string, number>>({});
   const [scrollProgress, setScrollProgress] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const story = {
@@ -89,6 +90,12 @@ const MyStory = () => {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = scrollTop / docHeight;
       setScrollProgress(scrollPercent);
+      
+      // Control video timeline based on scroll
+      if (videoRef.current && videoRef.current.duration) {
+        const targetTime = scrollPercent * videoRef.current.duration;
+        videoRef.current.currentTime = targetTime;
+      }
       
       const sections = containerRef.current.querySelectorAll('[data-section]');
       sections.forEach((section) => {
@@ -190,11 +197,17 @@ const MyStory = () => {
       {/* Video background */}
       <div className="fixed inset-0 z-0">
         <video
-          autoPlay
+          ref={videoRef}
           muted
-          loop
           playsInline
+          preload="auto"
           className="w-full h-full object-cover opacity-30"
+          onLoadedData={() => {
+            // Ensure video is ready for scrubbing
+            if (videoRef.current) {
+              videoRef.current.currentTime = 0;
+            }
+          }}
         >
           <source src="/assets/blooming-flowers.mp4" type="video/mp4" />
         </video>
