@@ -31,8 +31,21 @@ const MyStory = () => {
         ]
       },
       {
+        id: "timeline",
+        title: "02. The Journey",
+        content: [
+          "2018 - First line of code written",
+          "2019 - Built my first web application",
+          "2020 - Mastered React and modern frameworks",
+          "2021 - Started freelancing and client projects",
+          "2022 - Specialized in AI-powered solutions",
+          "2023 - Founded my own development practice",
+          "2024 - Expanding into enterprise solutions"
+        ]
+      },
+      {
         id: "journey",
-        title: "02. The Path",
+        title: "03. The Path",
         content: [
           "Through countless late nights and early mornings.",
           "Learning became my compass.",
@@ -44,7 +57,7 @@ const MyStory = () => {
       },
       {
         id: "vision",
-        title: "03. The Vision",
+        title: "04. The Vision",
         content: [
           "Tomorrow's digital landscape awaits.",
           "Where technology serves humanity.",
@@ -61,10 +74,9 @@ const MyStory = () => {
     const handleClick = () => {
       if (!isAudioEnabled) {
         setIsAudioEnabled(true);
-        // You can add background audio file here
-        // if (audioRef.current) {
-        //   audioRef.current.play();
-        // }
+        if (audioRef.current) {
+          audioRef.current.play();
+        }
       }
     };
 
@@ -111,6 +123,34 @@ const MyStory = () => {
     }
   };
 
+  const TimelineItem = ({ text, index, sectionId }: { text: string; index: number; sectionId: string }) => {
+    const isVisible = visibleSections[sectionId];
+    const [year, ...descParts] = text.split(' - ');
+    const description = descParts.join(' - ');
+    
+    return (
+      <div 
+        className={cn(
+          "flex items-center gap-8 mb-12 transition-all duration-700 ease-out",
+          isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-[-50px]"
+        )}
+        style={{
+          transitionDelay: `${index * 200}ms`
+        }}
+      >
+        <div className="text-2xl md:text-3xl font-light text-primary min-w-[100px]">
+          {year}
+        </div>
+        <div className="w-4 h-4 bg-primary rounded-full relative">
+          <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-30" />
+        </div>
+        <div className="flex-1 text-xl md:text-2xl font-light text-muted-foreground">
+          {description}
+        </div>
+      </div>
+    );
+  };
+
   const AnimatedText = ({ text, sectionId, index }: { text: string; sectionId: string; index: number }) => {
     const words = text.split(' ');
     const isVisible = visibleSections[sectionId];
@@ -140,9 +180,22 @@ const MyStory = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Cosmic background effects */}
+      {/* Video background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-primary/5" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover opacity-30"
+        >
+          <source src="/assets/blooming-flowers.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-primary/20" />
+      </div>
+
+      {/* Cosmic overlay effects */}
+      <div className="fixed inset-0 z-[1]">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-gentle" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse-gentle" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-muted/5 rounded-full blur-3xl animate-pulse-gentle" style={{ animationDelay: '4s' }} />
@@ -226,15 +279,26 @@ const MyStory = () => {
               </h2>
               
               <div className="space-y-8">
-                {section.content.map((paragraph, index) => (
-                  <div key={index} className="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed">
-                    <AnimatedText 
-                      text={paragraph} 
-                      sectionId={section.id} 
+                {section.id === 'timeline' ? (
+                  section.content.map((item, index) => (
+                    <TimelineItem 
+                      key={index}
+                      text={item} 
                       index={index}
+                      sectionId={section.id}
                     />
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  section.content.map((paragraph, index) => (
+                    <div key={index} className="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed">
+                      <AnimatedText 
+                        text={paragraph} 
+                        sectionId={section.id} 
+                        index={index}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </section>
@@ -285,15 +349,15 @@ const MyStory = () => {
         </section>
       </div>
 
-      {/* Background audio (uncomment and add audio file) */}
-      {/* <audio
+      {/* Background audio */}
+      <audio
         ref={audioRef}
         loop
         muted={isMuted}
         className="hidden"
       >
-        <source src="/path-to-your-audio-file.mp3" type="audio/mpeg" />
-      </audio> */}
+        <source src="/assets/ambient-sound.mp3" type="audio/mpeg" />
+      </audio>
     </div>
   );
 };
